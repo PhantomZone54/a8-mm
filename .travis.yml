@@ -27,6 +27,9 @@ script:
   - export KBUILD_BUILD_USER="fr3aky"
   - export KBUILD_BUILD_HOST="Phantom_Zone"
   - export ARCH_MTK_PLATFORM=mt6735
+  - mkdir -p arch/{arm,arm64}/boot/dts/include
+  - cd arch/arm/boot/dts/include && ln -s ../../../../../include/dt-bindings dt-bindings && cd ../../../../../
+  - cd arch/arm64/boot/dts/include && ln -s ../../../../../include/dt-bindings dt-bindings && cd ../../../../../
   - make O=out ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE gionee6753_66c_m0_defconfig
   - make O=out ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE -j32
   - KERNEL_DIR=$PWD
