@@ -27,14 +27,14 @@ script:
   - export KBUILD_BUILD_USER="fr3aky"
   - export KBUILD_BUILD_HOST="Phantom_Zone"
   - export ARCH_MTK_PLATFORM=mt6735
-  - make O=out ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE gnsz6753_66_n_defconfig
+  - make O=out ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE gionee6753_66c_m0_defconfig
   - make O=out ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE -j32
   - KERNEL_DIR=$PWD
   - ZIMAGE=$KERNEL_DIR/out/arch/arm64/boot/*Image*
 
 after_success:
   - cd $KERNEL_DIR/out
-  - curl --upload-file arch/arm64/boot/Image.gz https://transfer.sh/gnsz6753_66_n_defconfig-mm_zImage
+  - curl --upload-file arch/arm64/boot/Image.gz https://transfer.sh/gionee6753_66c_m0_defconfig-mm_zImage
 
 deploy:
   skip_cleanup: true
