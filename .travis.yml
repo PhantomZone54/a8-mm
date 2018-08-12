@@ -1,3 +1,7 @@
+os: linux
+
+dist: bionic
+
 sudo: required
 
 git:
@@ -16,29 +20,21 @@ install: true
 
 matrix:
   include:
-    - os: linux
-      dist: xenial
+    - name: "Built for gionee6735_65t"
       env: DEFCONFIG=gionee6735_65t_m0_defconfig
-    - os: linux
-      dist: xenial
+    - name: "Built for gionee6735_65u"
       env: DEFCONFIG=gionee6735_65u_m0_defconfig
-    - os: linux
-      dist: xenial
+    - name: "Built for gionee6735_66c"
       env: DEFCONFIG=gionee6735_66c_m0_defconfig
-    - os: linux
-      dist: xenial
+    - name: "Built for gionee6735m_65t"
       env: DEFCONFIG=gionee6735m_65t_m0_defconfig
-    - os: linux
-      dist: xenial
+    - name: "Built for gionee6735m_65u"
       env: DEFCONFIG=gionee6735m_65u_m0_defconfig
-    - os: linux
-      dist: xenial
+    - name: "Built for gionee6753_65t"
       env: DEFCONFIG=gionee6753_65t_m0_defconfig
-    - os: linux
-      dist: xenial
+    - name: "Built for gionee6753_65u"
       env: DEFCONFIG=gionee6753_65u_m0_defconfig
-    - os: linux
-      dist: xenial
+    - name: "Built for gionee6753_66c"
       env: DEFCONFIG=gionee6753_66c_m0_defconfig
 
 script:
@@ -56,17 +52,18 @@ script:
   - make O=out ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE $DEFCONFIG
   - make O=out ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE -j32
   - KERNEL_DIR=$PWD
-  - ZIMAGE=$KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb
+  - cp $KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb $KERNEL_DIR/out/arch/arm64/boot/$DEFCONFIG-mm_zImage
+  - ZIMAGE=$KERNEL_DIR/out/arch/arm64/boot/$DEFCONFIG-mm_zImage
 
 after_success:
-  - curl --upload-file $KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb https://transfer.sh/$DEFCONFIG-mm_zImage
+  - curl --upload-file $ZIMAGE https://transfer.sh/ && echo ""
 
 deploy:
   skip_cleanup: true
   provider: releases
   api_key:
     secure: wQnEG7G74G9+LTm2817DuM5fuRkwlpf0HB2n0mk3rQsi+QraDwce6wsqGx9MzHjYhnGWQolO7NPBnAW61X4YxrPykfBZV+aJHPlH7cLKPoSSSwm3lvNJqzDWtw/jivgVxhziZHqOq759vaC+NhOSc691Ss6nbY4ejJPdN+0iGN+bNkLHN3GnE/hpz5oIJ3iyKVhRWCs+6fqUFZ4Sf5D5OvxOUBtxiGcSRDSeiHmEz7wC34VdLZrUWQc8Q9bmp3PJxeuVFIzhU87hlikHvcQbkzqUtAxbMEfi+hTfKh9XfcEwyd73tuTDzSWxFx58wQ4JIEalxM+DnTePKzJip23Px/bxxQ66UDiNMZfNqXgzjEAuZYJBYXypMu7ZxW8eDPXHg2sxKpXNbgeMn52cg2SPAOLfLL9P0k8gzcq20LZLQa0IeWWpWXvH+TpsenvOLuoRszSFqH5MRtDbS4xDEdSz9hzNXtsgQcNvT/Kj1XKY2DsSy7N0rsASIEsGOIqqMC5Uoe964RjX8GgjDuxctUhlYVgpBWH6Fqc3EH1wUIwwfgSBReFbOVjqBWNxHmNTijekLsSVWdgWPTEeOVqrlx2nU6no7kvxFMupclqGWebrI7qDX4MLrOcaPZPAnk/rcTB57PhuyJWgD+0DjGi5mcekT+46fkbAE71BAAgCZSn9ZMM=
-  file: $KERNEL_DIR/out/arch/arm64/boot/Image.gz-dtb
+  file: $ZIMAGE
   on:
     tags: false
     repo: PhantomZone54/a8-mm
