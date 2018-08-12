@@ -1,6 +1,6 @@
 os: linux
 
-dist: bionic
+dist: xenial
 
 sudo: required
 
@@ -20,21 +20,21 @@ install: true
 
 matrix:
   include:
-    - name: "Built for gionee6735_65t"
+    - name: "Built for gionee6735_65t_m0_defconfig"
       env: DEFCONFIG=gionee6735_65t_m0_defconfig
-    - name: "Built for gionee6735_65u"
+    - name: "Built for gionee6735_65u_m0_defconfig"
       env: DEFCONFIG=gionee6735_65u_m0_defconfig
-    - name: "Built for gionee6735_66c"
+    - name: "Built for gionee6735_66c_m0_defconfig"
       env: DEFCONFIG=gionee6735_66c_m0_defconfig
-    - name: "Built for gionee6735m_65t"
+    - name: "Built for gionee6735m_65t_m0_defconfig"
       env: DEFCONFIG=gionee6735m_65t_m0_defconfig
-    - name: "Built for gionee6735m_65u"
+    - name: "Built for gionee6735m_65u_m0_defconfig"
       env: DEFCONFIG=gionee6735m_65u_m0_defconfig
-    - name: "Built for gionee6753_65t"
+    - name: "Built for gionee6753_65t_m0_defconfig"
       env: DEFCONFIG=gionee6753_65t_m0_defconfig
-    - name: "Built for gionee6753_65u"
+    - name: "Built for gionee6753_65u_m0_defconfig"
       env: DEFCONFIG=gionee6753_65u_m0_defconfig
-    - name: "Built for gionee6753_66c"
+    - name: "Built for gionee6753_66c_m0_defconfig"
       env: DEFCONFIG=gionee6753_66c_m0_defconfig
 
 script:
